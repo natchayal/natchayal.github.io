@@ -282,22 +282,6 @@ h3 {
     linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.8));
 }
 
-.profile-visual {
-  aspect-ratio: 1 / 1.1;
-  border-radius: 24px;
-  display: grid;
-  place-items: center;
-  background:
-    radial-gradient(circle at 25% 20%, rgba(0, 60, 185, 0.12), transparent 26%),
-    radial-gradient(circle at 75% 80%, rgba(250, 164, 26, 0.16), transparent 24%),
-    linear-gradient(135deg, rgba(255,255,255,0.98), rgba(245,248,253,0.92));
-  margin-bottom: 20px;
-  background-image: url('photos/headshot_NLuangphairin.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-}
-
 .profile-visual img {
   display: block;
   width: 100%;
