@@ -1,2 +1,2 @@
 # natchayal.github.io
-Personal Website and Portfolio
+[Visit my personal website](https://natchayal.github.io)
