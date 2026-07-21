@@ -228,11 +228,15 @@ h3 {
 }
 
 .hero-actions,
-.contact-links {
+.contact-card p {
+  margin: 0;
+}
+
+.contact-card .contact-links {
   display: flex;
-  gap: 14px;
+  gap: 12px;
   flex-wrap: wrap;
-  margin-top: 30px;
+  margin-top: 8px;
 }
 
 .button {
@@ -293,6 +297,7 @@ h3 {
 }
 
 .card-label {
+  margin-bottom: 14px;
 }
 
 .card-label {
@@ -484,49 +489,7 @@ h3 {
   line-height: 1.7;
 }
 
-/* USF seal watermark for the selected timeline card */
-.timeline-card.usf-card {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
 
-.timeline-card.usf-card::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 58%;
-  transform: translate(-50%, -50%);
-  width: 340px;
-  max-width: 92%;
-  aspect-ratio: 1;
-  background: url("photos/University-of-South-Florida-Seal.png")
-    center / contain no-repeat;
-  opacity: 0.07;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.timeline-card.usf-card > * {
-  position: relative;
-  z-index: 1;
-}
-
-.timeline-progress {
-  height: 12px;
-  border-radius: 999px;
-  background: rgba(1,32,96,0.10);
-  overflow: hidden;
-  margin: 0 8px 2px;
-}
-
-.timeline-progress-fill {
-  display: block;
-  height: 100%;
-  width: 38%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--accent-green), var(--accent), var(--accent-strong));
-}
 
 .timeline {
   display: grid;
@@ -563,9 +526,9 @@ h3 {
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  padding: 20px;
   overflow: hidden;
   border-radius: 28px;
+  padding: 20px;
   border: 1px solid rgba(1, 32, 96, 0.10);
   background: linear-gradient(
     180deg,
@@ -575,39 +538,28 @@ h3 {
   box-shadow: var(--shadow);
 }
 
-/* Keep the Tableau dashboard at full readable size and scroll inside this area. */
-.dashboard-shell .tableauPlaceholder {
+/* Visible frame that the scaled Tableau dashboard must fit inside */
+.tableau-fit {
   position: relative;
-  display: block;
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 0;
-  height: 960px;
-  overflow-x: scroll !important;
-  overflow-y: hidden !important;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
   border-radius: 22px;
   background: rgba(1, 32, 96, 0.04);
-  scrollbar-gutter: stable;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: auto;
-  scrollbar-color:
-    rgba(1, 32, 96, 0.48)
-    rgba(1, 32, 96, 0.08);
 }
 
-/* Tableau may add a wrapper div around the visualization. */
-.dashboard-shell .tableauPlaceholder > div {
-  display: block !important;
-  width: 1600px !important;
-  min-width: 1600px !important;
-  max-width: none !important;
-  height: 927px !important;
+/* Tableau keeps its original 1600 × 927 layout and is scaled by JavaScript */
+.tableau-scale {
+  position: relative;
+  width: 1600px;
+  height: 927px;
+  transform-origin: top left;
 }
 
-/* Preserve the original dashboard dimensions instead of squeezing it. */
-.dashboard-shell object.tableauViz,
-.dashboard-shell iframe,
-.dashboard-shell .tableauViz {
+.tableau-scale > div,
+.tableau-scale object.tableauViz,
+.tableau-scale iframe,
+.tableau-scale .tableauViz {
   display: block !important;
   width: 1600px !important;
   min-width: 1600px !important;
@@ -619,34 +571,13 @@ h3 {
   border: 0 !important;
 }
 
-/* Fallback image shown when JavaScript is unavailable. */
-.dashboard-shell noscript,
-.dashboard-shell noscript a,
-.dashboard-shell noscript img {
+.tableau-scale noscript,
+.tableau-scale noscript a,
+.tableau-scale noscript img {
   display: block;
   width: 1600px;
   max-width: none;
-}
-
-/* Visible horizontal scrollbar. */
-.dashboard-shell .tableauPlaceholder::-webkit-scrollbar {
-  width: 14px;
-  height: 14px;
-}
-
-.dashboard-shell .tableauPlaceholder::-webkit-scrollbar-track {
-  background: rgba(1, 32, 96, 0.08);
-  border-radius: 999px;
-}
-
-.dashboard-shell .tableauPlaceholder::-webkit-scrollbar-thumb {
-  background: rgba(1, 32, 96, 0.48);
-  border: 3px solid rgba(255, 255, 255, 0.80);
-  border-radius: 999px;
-}
-
-.dashboard-shell .tableauPlaceholder::-webkit-scrollbar-thumb:hover {
-  background: rgba(1, 32, 96, 0.68);
+  border: 0;
 }
 
 .dashboard-app {
@@ -898,10 +829,6 @@ h3 {
   .timeline-cards {
     grid-auto-columns: minmax(260px, 85vw);
   }
-
-  .dashboard-shell .tableauPlaceholder {
-    height: 960px;
-  }
 }
 
 @media (max-width: 640px) {
@@ -942,7 +869,12 @@ h3 {
     padding: 20px;
   }
 
-  .dashboard-shell .tableauPlaceholder {
-    height: 960px;
+  .dashboard-shell {
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  .tableau-fit {
+    border-radius: 14px;
   }
 }
