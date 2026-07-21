@@ -1,3 +1,2 @@
-# Hello 👋
-natchayal.github.io
-Visit my personal [website](https://natchayal.github.io)
+# Hello 👋  
+Visit my personal website [natchayal.github.io](https://natchayal.github.io)
