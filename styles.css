@@ -205,6 +205,9 @@ h2 {
 
 h3 {
   font-size: 1.8rem;
+  width: 100%;
+  max-width: none;
+  text-wrap: pretty;
 }
 
 .lede,
@@ -481,6 +484,34 @@ h3 {
   line-height: 1.7;
 }
 
+/* USF seal watermark for the selected timeline card */
+.timeline-card.usf-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.timeline-card.usf-card::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  transform: translate(-50%, -50%);
+  width: 340px;
+  max-width: 92%;
+  aspect-ratio: 1;
+  background: url("photos/University-of-South-Florida-Seal.png")
+    center / contain no-repeat;
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.timeline-card.usf-card > * {
+  position: relative;
+  z-index: 1;
+}
+
 .timeline-progress {
   height: 12px;
   border-radius: 999px;
@@ -529,24 +560,93 @@ h3 {
 }
 
 .dashboard-shell {
-  border-radius: 28px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   padding: 20px;
-  border: 1px solid rgba(1,32,96,0.10);
-  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.82));
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid rgba(1, 32, 96, 0.10);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 255, 255, 0.82)
+  );
   box-shadow: var(--shadow);
 }
 
+/* Keep the Tableau dashboard at full readable size and scroll inside this area. */
 .dashboard-shell .tableauPlaceholder {
-  width: 100%;
-  min-height: 720px;
-  overflow: hidden;
+  position: relative;
+  display: block;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0;
+  height: 960px;
+  overflow-x: scroll !important;
+  overflow-y: hidden !important;
   border-radius: 22px;
-  background: rgba(1,32,96,0.04);
+  background: rgba(1, 32, 96, 0.04);
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: auto;
+  scrollbar-color:
+    rgba(1, 32, 96, 0.48)
+    rgba(1, 32, 96, 0.08);
 }
 
-.dashboard-shell object.tableauViz {
-  width: 100%;
-  border: 0;
+/* Tableau may add a wrapper div around the visualization. */
+.dashboard-shell .tableauPlaceholder > div {
+  display: block !important;
+  width: 1600px !important;
+  min-width: 1600px !important;
+  max-width: none !important;
+  height: 927px !important;
+}
+
+/* Preserve the original dashboard dimensions instead of squeezing it. */
+.dashboard-shell object.tableauViz,
+.dashboard-shell iframe,
+.dashboard-shell .tableauViz {
+  display: block !important;
+  width: 1600px !important;
+  min-width: 1600px !important;
+  max-width: none !important;
+  height: 927px !important;
+  min-height: 927px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+/* Fallback image shown when JavaScript is unavailable. */
+.dashboard-shell noscript,
+.dashboard-shell noscript a,
+.dashboard-shell noscript img {
+  display: block;
+  width: 1600px;
+  max-width: none;
+}
+
+/* Visible horizontal scrollbar. */
+.dashboard-shell .tableauPlaceholder::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+.dashboard-shell .tableauPlaceholder::-webkit-scrollbar-track {
+  background: rgba(1, 32, 96, 0.08);
+  border-radius: 999px;
+}
+
+.dashboard-shell .tableauPlaceholder::-webkit-scrollbar-thumb {
+  background: rgba(1, 32, 96, 0.48);
+  border: 3px solid rgba(255, 255, 255, 0.80);
+  border-radius: 999px;
+}
+
+.dashboard-shell .tableauPlaceholder::-webkit-scrollbar-thumb:hover {
+  background: rgba(1, 32, 96, 0.68);
 }
 
 .dashboard-app {
@@ -800,7 +900,7 @@ h3 {
   }
 
   .dashboard-shell .tableauPlaceholder {
-    min-height: 560px;
+    height: 960px;
   }
 }
 
@@ -843,6 +943,6 @@ h3 {
   }
 
   .dashboard-shell .tableauPlaceholder {
-    min-height: 480px;
+    height: 960px;
   }
 }
