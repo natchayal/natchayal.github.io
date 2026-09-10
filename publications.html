@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Selected publications, write-ups, and dashboards from Natchaya Luangphairin." />
+  <title>Publications — Jade's Field Notes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-a" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-b" aria-hidden="true"></div>
+  <canvas class="ripple-canvas" aria-hidden="true"></canvas>
+
+  <header class="topbar">
+    <a class="brand" href="index.html">Natchaya "Jade" Luangphairin</a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="publications.html" class="active">Publications</a>
+      <a href="experience.html">Experience</a>
+      <a href="skills-awards.html">Skills &amp; Awards</a>
+      <a href="teaching.html">Teaching</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+      <div class="search-box">
+        <input type="search" id="site-search" class="search-input" placeholder="Search..." aria-label="Search site" autocomplete="off" />
+        <div class="search-results" id="search-results" hidden></div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section" id="publications-overview">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Publications</p>
+        <h2>Selected articles and project write-ups.</h2>
+        <a class="section-jump" href="index.html#publications">← Back to overview</a>
+      </div>
+
+      <div class="feature-list">
+        <article class="feature-card reveal delay-1">
+          <div class="card-label">FLOW &amp; FACTS</div>
+          <h3>Water quality monitoring summary</h3>
+          <p>Brief report on trends, indicators, and reporting structure for drinking water monitoring.</p>
+          <a href="contact.html">Read more</a>
+        </article>
+        <article class="feature-card reveal delay-2">
+          <div class="card-label">Streams &amp; Stats</div>
+          <h3>Treatment operations dashboard</h3>
+          <p>Visual project translating operational data into simple views for treatment staff and managers.</p>
+          <a href="#dashboards">View dashboard</a>
+        </article>
+        <article class="feature-card reveal delay-3">
+          <div class="card-label">Behind the Tap</div>
+          <h3>Policy brief on water resilience</h3>
+          <p>Concise policy note connecting infrastructure, compliance, and public health priorities.</p>
+          <a href="contact.html">View brief</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="papers">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Papers &amp; Reports</p>
+        <h2>Peer-reviewed articles, technical reports, and invited features.</h2>
+      </div>
+
+      <p class="section-copy reveal delay-1">
+        Natchaya is the author of over 5 peer-reviewed publications, with several in preparation, in journals including <em>Environmental Monitoring and Assessment</em>, <em>Water</em>, <em>AWWA Water Science</em>, and <em>Journal AWWA</em>, including an invited special column author spotlight.
+      </p>
+
+      <div class="papers-group reveal delay-1" id="journal-articles">
+        <h3>Journal Articles</h3>
+        <ol class="papers-list numbered" reversed>
+          <li class="paper-item">
+            Alfredo, K., &amp; Luangphairin, N. (2026). "Tracking regulated inorganic level violations." <em>Journal AWWA Water Quality Matters</em>, 7(5), e70060. DOI: <a href="https://doi.org/10.1002/awwa.70060" target="_blank" rel="noreferrer">10.1002/awwa.70060</a>. <a href="documents/Publications/Journal%20AWWA%20-%202026%20-%20Alfredo%20-%20Tracking%20Regulated%20Inorganic%20Contaminant%20Level%20Violations.pdf" target="_blank" rel="noreferrer">PDF</a>
+          </li>
+          <li class="paper-item">
+            Luangphairin, N., Roberson, A., Alfredo, K. (2025). "Evaluating state nitrification action plans for controlling distribution system nitrification and MDBPs." <em>AWWA Water Science</em>, 118(3), e70036. DOI: <a href="https://doi.org/10.1002/aws2.70036" target="_blank" rel="noreferrer">10.1002/aws2.70036</a>. <a href="documents/Publications/AWWA%20Water%20Science%20-%202025%20-%20Luangphairin%20-%20Evaluating%20State%20Nitrification%20Action%20Plans%20for%20Controlling%20Distribution%20System.pdf" target="_blank" rel="noreferrer">PDF</a>
+          </li>
+          <li class="paper-item">
+            Black, A., Luangphairin, N., Papp, K., Gerrity, D., Dickenson, E., Alfredo, K. (2025). "Enhancing biofilm recovery from carbon filters for molecular analysis and flow cytometry." <em>AWWA Water Science</em>, 7(4), e70029. DOI: <a href="https://doi.org/10.1002/aws2.70029" target="_blank" rel="noreferrer">10.1002/aws2.70029</a>. <a href="documents/Publications/AWWA%20Water%20Science%20-%202025%20-%20Black%20-%20Enhancing%20Biofilm%20Recovery%20From%20Carbon%20Filters%20for%20Molecular%20Analysis%20and%20Flow.pdf" target="_blank" rel="noreferrer">PDF</a>
+          </li>
+          <li class="paper-item">
+            Black, A., Luangphairin, N., Alfredo, K. (2025). "The impact of the fourth regulatory determination on vulnerable populations." <em>Environmental Monitoring and Assessment</em>, 197(323). PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/39992476/" target="_blank" rel="noreferrer">39992476</a>. <a href="documents/Publications/Environmental%20Monitoring%20and%20Assessment%20-%202025%20-%20Black%20-%20The%20impact%20of%20the%20fourth%20regulatory%20determination%20on%20vulnerable%20populations.pdf" target="_blank" rel="noreferrer">PDF</a>
+          </li>
+          <li class="paper-item">
+            Richardson, N., Luangphairin, N., Bhattacharjee, A.S., Nachabe, M.H., Ergas, S.J. (2025). "Nursery runoff treatment by novel biochar-amended bioretention systems." <em>Water</em>, 17(3), 330. DOI: <a href="https://doi.org/10.3390/w17030330" target="_blank" rel="noreferrer">10.3390/w17030330</a>. <a href="documents/Publications/Water%20-%202025%20-%20Richardson%20-%20Nursery%20Runoff%20Treatment%20by%20Novel%20Biochar-Amended%20Bioretention%20Systems.pdf" target="_blank" rel="noreferrer">PDF</a>
+          </li>
+        </ol>
+      </div>
+
+      <div class="papers-group reveal delay-1" id="technical-reports">
+        <h3>Technical Reports</h3>
+        <ol class="papers-list numbered" reversed>
+          <li class="paper-item">
+            Richardson, N., Luangphairin, N., Cooper, R., Sharmin, N., Ergas, S.J., Nachabe, M., Bhattacharjee, A. (2024). "Demonstration of bioretention for treatment of agricultural runoff." Published by the Florida Department of Agriculture and Consumer Services (FDACS). <a href="https://www.fdacs.gov/content/download/118071/file/FDACS%20_28514_Final_Report_revised.pdf" target="_blank" rel="noreferrer">View on FDACS.gov</a> · <a href="documents/Publications/FDACS%20_28514_Final_Report_revised_DEMONSTRATION%20OF%20BIORETENTION%20FOR%20TREATMENT%20OF%20AGRICULTURAL%20RUNOFF.pdf" target="_blank" rel="noreferrer">PDF</a>
+          </li>
+        </ol>
+      </div>
+
+      <div class="papers-group reveal delay-2" id="manuscripts-in-preparation">
+        <h3>Manuscripts in Preparation &amp; Under Review</h3>
+        <ol class="papers-list numbered" reversed>
+          <li class="paper-item">
+            <span class="blur-text">Pickett, M., Kiger, A., Luangphairin, N., Hart, V. "When biology isn't the cause of headloss: ozone-induced microfloc accumulation in drinking water biofilters." <em>AWWA Water Science</em>.</span> <span class="paper-status">Under review, 2026</span>
+          </li>
+          <li class="paper-item">
+            <span class="blur-text">Luangphairin, N., Adhikari, M., Alfredo, K. "A retrospective cost and performance analysis of EPA's 50 full-scale arsenic pilots." <em>AWWA Water Science</em>.</span> <span class="paper-status">Under review</span>
+          </li>
+          <li class="paper-item">
+            <span class="blur-text">Luangphairin, N., Alfredo, K. "In search of a unified model: the evolution of biofiltration modeling for drinking water treatment." Target journal: <em>Water Research</em>.</span> <span class="paper-status">In preparation</span>
+          </li>
+          <li class="paper-item">
+            <span class="blur-text">Pickett, P., Kumar, P., Kiger, A., Luangphairin, N., Thompson, K., Vicario, E. "PFAS in wastewater: fate, transport, and treatment insights from potable reuse studies." Target journal: <em>Water Environment Research</em>.</span> <span class="paper-status">In preparation</span>
+          </li>
+          <li class="paper-item">
+            <span class="blur-text">Luangphairin, N., Fee, S., Alfredo, K. "Optimization of a GC–MS method for the detection and quantification of 1,4-dioxane in drinking water." Target journal: <em>Water Research</em>.</span> <span class="paper-status">In preparation</span>
+          </li>
+          <li class="paper-item">
+            <span class="blur-text">Luangphairin, N., Fee, S., Alfredo, K. "Beyond the plate count: tracking VBNCs and true inactivation by flow cytometry across a Ct range." Target journal: <em>Environmental Science &amp; Technology</em>.</span> <span class="paper-status">In preparation</span>
+          </li>
+        </ol>
+      </div>
+
+      <div class="papers-group reveal delay-2" id="invited-features">
+        <h3>Invited Features &amp; Media</h3>
+        <ol class="papers-list numbered" reversed>
+          <li class="paper-item">
+            Luangphairin, N. "JAWWA author spotlight." <em>Journal AWWA</em> (Accepted, Sept/Oct issue).
+          </li>
+          <li class="paper-item">
+            Luangphairin, N. "AWWA active on college campuses." <em>AWWA</em> (September 5, 2025). <a href="https://www.awwa.org/AWWA-Articles/awwa-active-on-college-campuses/" target="_blank" rel="noreferrer">View article</a>
+          </li>
+          <li class="paper-item">
+            Natchaya regularly contributes USF Student Chapter updates to the quarterly FSAWWA Region IV newsletter, highlighting the chapter's activities, student achievements, and water-sector engagement. <a href="https://www.fsawwa.org/page/320" target="_blank" rel="noreferrer">View newsletter</a>
+          </li>
+        </ol>
+      </div>
+
+      <div class="papers-group reveal delay-3" id="conference-presentations">
+        <h3>Conference Presentations &amp; Invited Talks</h3>
+        <p class="papers-group-intro">Natchaya has participated in over 10 research presentations at national and local conferences and has led workshops advancing database management practices and the application of statistical machine learning approaches in the water sector. See photos from these conferences in the <a href="gallery.html#gallery-podium">Gallery</a>.</p>
+        <ol class="papers-list numbered" reversed>
+          <li class="paper-item">
+            Luangphairin, N. "Beyond the plate count: tracking VBNCs and true inactivation by flow cytometry across a Ct range." AWWA Water Quality Technology Conference (WQTC), Memphis, TN. <span class="paper-status">2026, accepted</span>
+          </li>
+          <li class="paper-item">
+            Luangphairin, N. AWWA IMTR Workshop: "From data to decision: a framework for policy analysis using integrated EPA datasets." AWWA Water Quality Technology Conference (WQTC), Memphis, TN. <span class="paper-status">2026, accepted</span>
+          </li>
+          <li class="paper-item">
+            Luangphairin, N., Alfredo, K. "Achieving arsenic compliance: lessons from EPA's 50 demo sites." AWWA Inorganic Committee webcast. <span class="paper-status">Jul 2026</span>
+          </li>
+          <li class="paper-item">
+            Luangphairin, N., Adhikari, M., Yazdani Arani, M., Alfredo, K. "Arsenic demo sites: where are they now? A retrospective cost and performance analysis of EPA's 50 full-scale treatment pilots." AWWA WQTC, Tacoma, WA. <span class="paper-status">Nov 2025 · Podium presenter</span>
+          </li>
+          <li class="paper-item">
+            Luangphairin, N. "Evaluating the impact of state nitrification action plans in mitigating distribution system nitrification and MDBPs." FSAWWA Fall Conference, Kissimmee, FL. <span class="paper-status">Dec 2024 · Podium presenter</span>
+          </li>
+          <li class="paper-item">
+            Luangphairin, N. "Evaluating the impact of state nitrification action plans on system nitrification, disinfectant residuals, and MDBP risks." AWWA WQTC, Dallas, TX. <span class="paper-status">Nov 2023 · Podium presenter</span>
+          </li>
+          <li class="paper-item">
+            Luangphairin, N., Adhikari, M., Alfredo, K. "Arsenic demo sites: where are they now?" SWFWRC/AWRA, Fort Myers, FL. <span class="paper-status">Jan 2026 · Best Poster, 1st Place</span>
+          </li>
+          <li class="paper-item">
+            Luangphairin, N., Adhikari, M., Alfredo, K. "Arsenic demo sites: where are they now?" FSAWWA Conference, Orlando, FL. <span class="paper-status">Nov–Dec 2025 · Best Poster, 2nd Place</span>
+          </li>
+          <li class="paper-item">
+            Black, A., Luangphairin, N., Papp, K., Gerrity, D., Dickenson, E., Alfredo, K. "Biofilm removal from granular media filters for microbial analysis." AWWA WQTC, Tacoma, WA. <span class="paper-status">Nov 2025 · Best Poster, 3rd Place</span>
+          </li>
+          <li class="paper-item">
+            Luangphairin, N., Roberson, A., Alfredo, K. "Evaluating the impact of state nitrification action plans on distribution system nitrification and MDBP production." FWRC Conference, Kissimmee, FL. <span class="paper-status">Apr 2024 · Best Poster, 2nd Place</span>
+          </li>
+          <li class="paper-item">
+            Luangphairin, N., Roberson, A., Alfredo, K. "Evaluating the impact of nitrification action plans on system nitrification, residuals, and MDBP risks." FSAWWA Conference, Championsgate, FL. <span class="paper-status">Dec 2023 · Best Poster, 2nd Place</span>
+          </li>
+          <li class="paper-item">
+            Luangphairin, N., Roberson, A., Alfredo, K. "Evaluating the impact of nitrification action plans on system nitrification and MDBP production." SWFWRC/AWRA, Fort Myers, FL. <span class="paper-status">Feb 2023 · Best Poster, 3rd Place</span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section dashboard-section" id="dashboards">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Dashboards</p>
+        <h2>Turning data into insights.</h2>
+      </div>
+
+      <p class="section-copy reveal delay-1">
+        One place to showcase the dashboards I build for water quality, operational analysis, and policy communication.
+      </p>
+
+      <div class="dashboard-shell reveal delay-2">
+        <div class="card-label">TABLEAU</div>
+        <div class="tableau-fit">
+          <div
+            class="tableauPlaceholder tableau-scale"
+            id="viz1784597303351"
+            style="position: relative;"
+          >
+            <noscript>
+              <a href="#">
+                <img
+                  alt="Violation Dashboard"
+                  src="https://public.tableau.com/static/images/dw/dw_inorganic_violation_dashboard/ViolationDashboard/1_rss.png"
+                />
+              </a>
+            </noscript>
+
+            <object class="tableauViz" style="display: none;">
+              <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F" />
+              <param name="embed_code_version" value="3" />
+              <param name="site_root" value="" />
+              <param
+                name="name"
+                value="dw_inorganic_violation_dashboard/ViolationDashboard"
+              />
+              <param name="tabs" value="no" />
+              <param name="toolbar" value="yes" />
+              <param
+                name="static_image"
+                value="https://public.tableau.com/static/images/dw/dw_inorganic_violation_dashboard/ViolationDashboard/1.png"
+              />
+              <param name="animate_transition" value="yes" />
+              <param name="display_static_image" value="yes" />
+              <param name="display_spinner" value="yes" />
+              <param name="display_overlay" value="yes" />
+              <param name="display_count" value="yes" />
+              <param name="language" value="en-US" />
+            </object>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (() => {
+          const TABLEAU_WIDTH = 1600;
+          const TABLEAU_HEIGHT = 927;
+
+          const fitContainer = document.querySelector(".tableau-fit");
+          const tableauScale = document.querySelector(".tableau-scale");
+          const vizElement = tableauScale.querySelector("object");
+
+          vizElement.style.width = `${TABLEAU_WIDTH}px`;
+          vizElement.style.height = `${TABLEAU_HEIGHT}px`;
+
+          function resizeTableau() {
+            const availableWidth = fitContainer.clientWidth;
+            const scale = Math.min(availableWidth / TABLEAU_WIDTH, 1);
+
+            tableauScale.style.transform = `scale(${scale})`;
+            fitContainer.style.height = `${TABLEAU_HEIGHT * scale}px`;
+          }
+
+          const resizeObserver = new ResizeObserver(resizeTableau);
+          resizeObserver.observe(fitContainer);
+          resizeTableau();
+
+          const scriptElement = document.createElement("script");
+          scriptElement.src =
+            "https://public.tableau.com/javascripts/api/viz_v1.js";
+
+          vizElement.parentNode.insertBefore(scriptElement, vizElement);
+        })();
+      </script>
+
+      <div class="dashboard-app reveal delay-3">
+        <div class="card-label">Shiny App</div>
+        <h3>Arsenic Demonstration Sites</h3>
+        <p class="small-note">On January 22, 2001, the EPA lowered the arsenic standard in drinking water from 50 µg/L to 10 µg/L. To support this change, the EPA initiated a program for research and development of more cost-effective treatment technologies and provided technical assistance to operators of small systems to help reduce compliance costs. This Dashboard is an independently developed tool to explore data from this study. It is not affiliated with the EPA and integrates publicly available water-quality data from multiple sources, including the United States Geological Survey (USGS), the Environmental Protection Agency (EPA), and other local agencies.</p>
+        <a href="https://6bset2-natchayal.shinyapps.io/arsenic_demo_site_app/" target="_blank" rel="noreferrer">Open app</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Natchaya Luangphairin.</p>
+  </footer>
+
+  <script src="script.js?v=12"></script>
+</body>
+</html>

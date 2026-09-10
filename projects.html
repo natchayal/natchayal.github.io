@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Selected project slide decks from Natchaya Luangphairin." />
+  <title>Projects — Jade's Field Notes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-a" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-b" aria-hidden="true"></div>
+  <canvas class="ripple-canvas" aria-hidden="true"></canvas>
+
+  <header class="topbar">
+    <a class="brand" href="index.html">Natchaya "Jade" Luangphairin</a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="about.html">About</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="publications.html">Publications</a>
+      <a href="experience.html">Experience</a>
+      <a href="skills-awards.html">Skills &amp; Awards</a>
+      <a href="teaching.html">Teaching</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+      <div class="search-box">
+        <input type="search" id="site-search" class="search-input" placeholder="Search..." aria-label="Search site" autocomplete="off" />
+        <div class="search-results" id="search-results" hidden></div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section" id="projects-overview">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Projects</p>
+        <h2>Selected project slide decks.</h2>
+      </div>
+
+      <p class="section-copy reveal delay-1">
+        A closer look at a few research projects, each with its own presentation slide deck below.
+      </p>
+    </section>
+
+    <section class="section" id="project-arsenic">
+      <div class="papers-group reveal delay-1">
+        <h3>Arsenic Demonstration Sites</h3>
+        <p class="papers-group-intro">
+          A retrospective cost and performance analysis of EPA's 50 full-scale arsenic treatment pilot sites, examining outcomes following the 2001 arsenic MCL reduction from 50 µg/L to 10 µg/L. This work supports the interactive Shiny dashboard on the <a href="publications.html#dashboards">Publications page</a> and has been presented at AWWA WQTC, SWFWRC/AWRA, and FSAWWA conferences.
+        </p>
+        <div class="project-slide">
+          <iframe src="documents/Projects/Arsenic_Slide_20260225_NL.pdf" title="Arsenic Demonstration Sites slide deck" loading="lazy"></iframe>
+          <a class="section-jump" href="documents/Projects/Arsenic_Slide_20260225_NL.pdf" target="_blank" rel="noreferrer">Open PDF in new tab →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="project-biofiltration">
+      <div class="papers-group reveal delay-2">
+        <h3>Biofiltration Research</h3>
+        <p class="papers-group-intro">
+          Research on biofilter design and management for micropollutant removal, including deep-learning-based prediction models (LSTM, Neural ODE, SINDy) and microbial community dynamics, supporting Natchaya's Ph.D. dissertation on biofilm microbiome and emerging contaminant degradation.
+        </p>
+        <div class="project-slide">
+          <iframe src="documents/Projects/Biofiltration_20260225_NL.pdf" title="Biofiltration Research slide deck" loading="lazy"></iframe>
+          <a class="section-jump" href="documents/Projects/Biofiltration_20260225_NL.pdf" target="_blank" rel="noreferrer">Open PDF in new tab →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Natchaya Luangphairin.</p>
+  </footer>
+
+  <script src="script.js?v=12"></script>
+</body>
+</html>
