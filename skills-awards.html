@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=10" />
 </head>
 <body>
   <div class="bg-grid" aria-hidden="true"></div>
@@ -35,12 +35,40 @@
     </nav>
   </header>
 
+  <nav class="side-toc" aria-label="Track and jump to section">
+    <span class="side-toc-heading">On This Page</span>
+    <a class="side-toc-item" href="#honors-awards">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Honors &amp; Awards</span>
+    </a>
+    <a class="side-toc-item" href="#certifications">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Certifications</span>
+    </a>
+    <a class="side-toc-item" href="#software-tools">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Software &amp; Tools</span>
+    </a>
+    <a class="side-toc-item" href="#core-competencies">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Core Technical Competencies</span>
+    </a>
+  </nav>
+
   <main>
     <section class="section">
       <div class="section-heading reveal">
         <p class="eyebrow">Professional Skills &amp; Awards</p>
         <h2>Scholarships, honors, certifications, and technical skills.</h2>
       </div>
+
+      <nav class="quick-nav reveal delay-1" aria-label="Jump to section">
+        <span class="quick-nav-label">On This Page &rarr;</span>
+        <a href="#honors-awards">Honors &amp; Awards</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#software-tools">Software &amp; Tools</a>
+        <a href="#core-competencies">Core Technical Competencies</a>
+      </nav>
 
       <div class="papers-group reveal delay-1" id="honors-awards">
         <h3>Honors &amp; Awards</h3>
@@ -63,11 +91,12 @@
         <h3>Certifications</h3>
         <p class="papers-group-intro">Click a certification to view its certificate.</p>
         <div class="skills-tags">
-          <a class="skill-tag" href="documents/Certifications/Engineer-Intern-EI.pdf" target="_blank" rel="noreferrer">Engineer Intern (E.I.) — FL Board of Professional Engineers</a>
-          <a class="skill-tag" href="documents/Certifications/Environmental-Sustainability-Professional-ENV-SP.pdf" target="_blank" rel="noreferrer">Environmental Sustainability Professional (ENV SP)</a>
-          <a class="skill-tag" href="documents/Certifications/Six-Sigma.pdf" target="_blank" rel="noreferrer">Six Sigma</a>
-          <a class="skill-tag" href="documents/Certifications/ICPSR-Statistics-Quantitative-Methods.pdf" target="_blank" rel="noreferrer">ICPSR Statistics &amp; Quantitative Methods Certification</a>
-          <a class="skill-tag" href="documents/Certifications/CPR-AED-First-Aid.pdf" target="_blank" rel="noreferrer">CPR / AED / First Aid</a>
+          <a class="skill-tag" href="documents/Certificates/FBPECertificate_NLuangphairin.pdf" target="_blank" rel="noreferrer">Engineer Intern (E.I.) — FL Board of Professional Engineers</a>
+          <a class="skill-tag" href="documents/Certificates/ENV SP Certificate_NLuangphairin.pdf" target="_blank" rel="noreferrer">Environmental Sustainability Professional (ENV SP)</a>
+          <a class="skill-tag" href="documents/Certificates/Six Sigma.png" target="_blank" rel="noreferrer">Six Sigma</a>
+          <a class="skill-tag" href="documents/Certificates/ICPSR_Summer2023_NLuangphairin_Certificate.pdf" target="_blank" rel="noreferrer">ICPSR Statistics &amp; Quantitative Methods Certification</a>
+          <a class="skill-tag" href="documents/Certificates/ICPSR_Shiny_NLuangphairin_Certificate.pdf" target="_blank" rel="noreferrer">ICPSR: Intro to R Shiny</a>
+          <a class="skill-tag" href="documents/Certificates/CPR-AED.pdf" target="_blank" rel="noreferrer">CPR / AED / First Aid</a>
           <a class="skill-tag" href="documents/Certifications/SAChE.pdf" target="_blank" rel="noreferrer">Chemical Engineering Education (SAChE)</a>
           <a class="skill-tag" href="documents/Certifications/CITI-RCR.pdf" target="_blank" rel="noreferrer">Responsible Conduct of Research for Engineering (CITI Program)</a>
           <a class="skill-tag" href="documents/Certifications/OSHA-10.pdf" target="_blank" rel="noreferrer">OSHA 10</a>
@@ -109,12 +138,32 @@
         </div>
       </div>
     </section>
+
+    <section class="section" id="quick-access">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Quick Access</p>
+        <h2>Quick access to the main sections.</h2>
+      </div>
+
+      <div class="links-grid">
+        <a class="link-pill reveal delay-1" href="index.html">Overview</a>
+        <a class="link-pill reveal delay-1" href="about.html">About</a>
+        <a class="link-pill reveal delay-1" href="projects.html">Projects</a>
+        <a class="link-pill reveal delay-2" href="publications.html">Publications</a>
+        <a class="link-pill reveal delay-2" href="experience.html">Experience</a>
+        <a class="link-pill reveal delay-2" href="skills-awards.html">Skills &amp; Awards</a>
+        <a class="link-pill reveal delay-3" href="teaching.html">Teaching</a>
+        <a class="link-pill reveal delay-3" href="gallery.html">Gallery</a>
+        <a class="link-pill reveal delay-3" href="contact.html">Contact</a>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
     <p>© <span id="year"></span> Natchaya Luangphairin.</p>
+    <p class="footer-updated">Last updated: <span id="last-updated"></span></p>
   </footer>
 
-  <script src="script.js?v=12"></script>
+  <script src="script.js?v=14"></script>
 </body>
 </html>

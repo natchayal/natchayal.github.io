@@ -1,6 +1,18 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
 (() => {
+  const lastUpdatedEl = document.getElementById('last-updated');
+  if (!lastUpdatedEl) return;
+  const modified = new Date(document.lastModified);
+  if (isNaN(modified.getTime())) return;
+  lastUpdatedEl.textContent = modified.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+})();
+
+(() => {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const canvas = document.querySelector('.ripple-canvas');
@@ -289,4 +301,36 @@ document.getElementById('year').textContent = new Date().getFullYear();
   });
 
   buildIndex();
+})();
+
+(() => {
+  const items = Array.from(document.querySelectorAll('.side-toc-item'));
+  if (!items.length) return;
+
+  const sections = items
+    .map((item) => {
+      const id = item.getAttribute('href').slice(1);
+      return { item, el: document.getElementById(id) };
+    })
+    .filter((s) => s.el);
+  if (!sections.length) return;
+
+  function setActive(el) {
+    const match = sections.find((s) => s.el === el);
+    if (!match) return;
+    items.forEach((i) => i.classList.remove('is-active'));
+    match.item.classList.add('is-active');
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setActive(entry.target);
+      });
+    },
+    { rootMargin: '-40% 0px -50% 0px', threshold: 0 }
+  );
+
+  sections.forEach((s) => observer.observe(s.el));
+  setActive(sections[0].el);
 })();

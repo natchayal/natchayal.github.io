@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=10" />
 </head>
 <body>
   <div class="bg-grid" aria-hidden="true"></div>
@@ -35,6 +35,34 @@
     </nav>
   </header>
 
+  <nav class="side-toc" aria-label="Track and jump to project">
+    <span class="side-toc-heading">On This Page</span>
+    <a class="side-toc-item" href="#project-arsenic">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Arsenic Demonstration Sites</span>
+    </a>
+    <a class="side-toc-item" href="#project-nitrification">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Nitrification Action Plans</span>
+    </a>
+    <a class="side-toc-item" href="#project-biofilm-modeling">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Biofilm Management &amp; Modeling</span>
+    </a>
+    <a class="side-toc-item" href="#project-complex-systems-modeling">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Complex Systems Modeling</span>
+    </a>
+    <a class="side-toc-item" href="#project-biofilm-detachment">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Biofilm Detachment Method</span>
+    </a>
+    <a class="side-toc-item" href="#project-rhi-pfas">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">RHI &amp; PFAS Research</span>
+    </a>
+  </nav>
+
   <main>
     <section class="section" id="projects-overview">
       <div class="section-heading reveal">
@@ -47,6 +75,7 @@
       </p>
 
       <nav class="quick-nav reveal delay-2" aria-label="Jump to project category">
+        <span class="quick-nav-label">On This Page &rarr;</span>
         <a href="#project-arsenic">Arsenic Demonstration Sites</a>
         <a href="#project-nitrification">Nitrification Action Plans</a>
         <a href="#project-biofilm-modeling">Biofilm Management &amp; Modeling</a>
@@ -148,12 +177,32 @@
         </div>
       </div>
     </section>
+
+    <section class="section" id="quick-access">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Quick Access</p>
+        <h2>Quick access to the main sections.</h2>
+      </div>
+
+      <div class="links-grid">
+        <a class="link-pill reveal delay-1" href="index.html">Overview</a>
+        <a class="link-pill reveal delay-1" href="about.html">About</a>
+        <a class="link-pill reveal delay-1" href="projects.html">Projects</a>
+        <a class="link-pill reveal delay-2" href="publications.html">Publications</a>
+        <a class="link-pill reveal delay-2" href="experience.html">Experience</a>
+        <a class="link-pill reveal delay-2" href="skills-awards.html">Skills &amp; Awards</a>
+        <a class="link-pill reveal delay-3" href="teaching.html">Teaching</a>
+        <a class="link-pill reveal delay-3" href="gallery.html">Gallery</a>
+        <a class="link-pill reveal delay-3" href="contact.html">Contact</a>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
     <p>© <span id="year"></span> Natchaya Luangphairin.</p>
+    <p class="footer-updated">Last updated: <span id="last-updated"></span></p>
   </footer>
 
-  <script src="script.js?v=12"></script>
+  <script src="script.js?v=14"></script>
 </body>
 </html>

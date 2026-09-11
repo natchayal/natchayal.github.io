@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=10" />
 </head>
 <body>
   <div class="bg-grid" aria-hidden="true"></div>
@@ -35,17 +35,39 @@
     </nav>
   </header>
 
+  <nav class="side-toc" aria-label="Track and jump to section">
+    <span class="side-toc-heading">On This Page</span>
+    <a class="side-toc-item" href="#teaching-experience">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Teaching Experience</span>
+    </a>
+    <a class="side-toc-item" href="#meet-my-mentees">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Meet My Mentees</span>
+    </a>
+    <a class="side-toc-item" href="#notes-explainers">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Notes &amp; Explainers</span>
+    </a>
+  </nav>
+
   <main>
     <section class="section" id="teaching-experience">
       <div class="section-heading reveal">
         <p class="eyebrow">Teaching</p>
         <h2>Instruction, workshops, and guest lectures in water research and policy.</h2>
-        <a class="section-jump" href="index.html#teaching">← Back to overview</a>
       </div>
 
       <p class="section-copy reveal delay-1">
         Natchaya has taught undergraduate- and graduate-level lessons covering analytical methods for water-quality testing, navigation and analysis of federal environmental databases, introductory R programming and statistical analysis, and advanced multilevel modeling. The following details the courses and workshops in which she has served as an instructor or guest lecturer at USF and national conferences, teaching utility operators, researchers, engineers, consultants, and students.
       </p>
+
+      <nav class="quick-nav reveal delay-2" aria-label="Jump to section">
+        <span class="quick-nav-label">On This Page &rarr;</span>
+        <a href="#teaching-experience">Teaching Experience</a>
+        <a href="#meet-my-mentees">Meet My Mentees</a>
+        <a href="#notes-explainers">Notes &amp; Explainers</a>
+      </nav>
 
       <div class="papers-group reveal delay-1">
         <ul class="papers-list">
@@ -144,12 +166,32 @@
         </p>
       </div>
     </section>
+
+    <section class="section" id="quick-access">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Quick Access</p>
+        <h2>Quick access to the main sections.</h2>
+      </div>
+
+      <div class="links-grid">
+        <a class="link-pill reveal delay-1" href="index.html">Overview</a>
+        <a class="link-pill reveal delay-1" href="about.html">About</a>
+        <a class="link-pill reveal delay-1" href="projects.html">Projects</a>
+        <a class="link-pill reveal delay-2" href="publications.html">Publications</a>
+        <a class="link-pill reveal delay-2" href="experience.html">Experience</a>
+        <a class="link-pill reveal delay-2" href="skills-awards.html">Skills &amp; Awards</a>
+        <a class="link-pill reveal delay-3" href="teaching.html">Teaching</a>
+        <a class="link-pill reveal delay-3" href="gallery.html">Gallery</a>
+        <a class="link-pill reveal delay-3" href="contact.html">Contact</a>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
     <p>© <span id="year"></span> Natchaya Luangphairin.</p>
+    <p class="footer-updated">Last updated: <span id="last-updated"></span></p>
   </footer>
 
-  <script src="script.js?v=12"></script>
+  <script src="script.js?v=14"></script>
 </body>
 </html>

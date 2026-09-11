@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=10" />
 </head>
 <body>
   <div class="bg-grid" aria-hidden="true"></div>
@@ -35,12 +35,31 @@
     </nav>
   </header>
 
+  <nav class="side-toc" aria-label="Track and jump to section">
+    <span class="side-toc-heading">On This Page</span>
+    <a class="side-toc-item" href="#professional-experience">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Professional &amp; Academic Experience</span>
+    </a>
+    <a class="side-toc-item" href="#leadership-committee-roles">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Leadership &amp; Committee Roles</span>
+    </a>
+    <a class="side-toc-item" href="#mentorship-outreach">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Mentorship &amp; Outreach</span>
+    </a>
+    <a class="side-toc-item" href="#peer-review-activities">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Peer-Review Activities</span>
+    </a>
+  </nav>
+
   <main>
     <section class="section" id="experience-overview">
       <div class="section-heading reveal">
         <p class="eyebrow">Experience</p>
         <h2>Applied work in water, analytics, and public service.</h2>
-        <a class="section-jump" href="index.html#experience">← Back to overview</a>
       </div>
 
       <div class="experience-list">
@@ -57,6 +76,14 @@
           <p>Translated technical findings into plain-language recommendations for public-sector and stakeholder audiences.</p>
         </article>
       </div>
+
+      <nav class="quick-nav reveal delay-3" aria-label="Jump to section">
+        <span class="quick-nav-label">On This Page &rarr;</span>
+        <a href="#professional-experience">Professional &amp; Academic Experience</a>
+        <a href="#leadership-committee-roles">Leadership &amp; Committee Roles</a>
+        <a href="#mentorship-outreach">Mentorship &amp; Outreach</a>
+        <a href="#peer-review-activities">Peer-Review Activities</a>
+      </nav>
     </section>
 
     <section class="section" id="professional-experience">
@@ -281,12 +308,32 @@
         </ul>
       </div>
     </section>
+
+    <section class="section" id="quick-access">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Quick Access</p>
+        <h2>Quick access to the main sections.</h2>
+      </div>
+
+      <div class="links-grid">
+        <a class="link-pill reveal delay-1" href="index.html">Overview</a>
+        <a class="link-pill reveal delay-1" href="about.html">About</a>
+        <a class="link-pill reveal delay-1" href="projects.html">Projects</a>
+        <a class="link-pill reveal delay-2" href="publications.html">Publications</a>
+        <a class="link-pill reveal delay-2" href="experience.html">Experience</a>
+        <a class="link-pill reveal delay-2" href="skills-awards.html">Skills &amp; Awards</a>
+        <a class="link-pill reveal delay-3" href="teaching.html">Teaching</a>
+        <a class="link-pill reveal delay-3" href="gallery.html">Gallery</a>
+        <a class="link-pill reveal delay-3" href="contact.html">Contact</a>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
     <p>© <span id="year"></span> Natchaya Luangphairin.</p>
+    <p class="footer-updated">Last updated: <span id="last-updated"></span></p>
   </footer>
 
-  <script src="script.js?v=12"></script>
+  <script src="script.js?v=14"></script>
 </body>
 </html>
