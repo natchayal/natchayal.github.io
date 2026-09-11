@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=10" />
+  <link rel="stylesheet" href="styles.css?v=15" />
 </head>
 <body>
   <div class="bg-grid" aria-hidden="true"></div>
@@ -103,6 +103,17 @@
       </aside>
     </section>
 
+    <nav class="quick-nav reveal" aria-label="Jump to section">
+      <span class="quick-nav-label">On This Page &rarr;</span>
+      <a href="#about">About</a>
+      <a href="#timeline">Timeline</a>
+      <a href="#publications">Publications</a>
+      <a href="#dashboards">Dashboards</a>
+      <a href="#experience">Experience</a>
+      <a href="#teaching">Teaching</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
     <section class="section" id="about">
       <div class="section-heading reveal">
         <p class="eyebrow">About my work</p>
@@ -113,17 +124,6 @@
       <p class="section-copy reveal delay-1">
         I focus on drinking water research, analytics, and policy to help translate complex operational data into clear, practical decisions for utilities, public agencies, and communities.
       </p>
-
-      <nav class="quick-nav reveal delay-2" aria-label="Jump to section">
-        <span class="quick-nav-label">On This Page &rarr;</span>
-        <a href="#about">About</a>
-        <a href="#timeline">Timeline</a>
-        <a href="#publications">Publications</a>
-        <a href="#dashboards">Dashboards</a>
-        <a href="#experience">Experience</a>
-        <a href="#teaching">Teaching</a>
-        <a href="#contact">Contact</a>
-      </nav>
     </section>
 
     <section class="section timeline-section" id="timeline">
@@ -213,6 +213,7 @@
 
       <div class="dashboard-shell reveal delay-2">
       <div class="card-label">TABLEAU</div>
+      <p class="dashboard-hint">&#8595; The blue buttons in the top corners of the dashboard are clickable — use them to jump to the comparative and detailed analysis views.</p>
       <div class="tableau-fit">
         <div
           class="tableauPlaceholder tableau-scale"
@@ -426,6 +427,6 @@
     <p class="footer-updated">Last updated: <span id="last-updated"></span></p>
   </footer>
 
-  <script src="script.js?v=14"></script>
+  <script src="script.js?v=16"></script>
 </body>
 </html>

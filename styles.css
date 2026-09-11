@@ -345,9 +345,7 @@ main {
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 20px;
-  position: sticky;
-  top: 12px;
-  z-index: 10;
+  position: static;
   padding: 10px;
   border-radius: 16px;
   border: 1px solid var(--panel-border);
@@ -877,6 +875,13 @@ h3 {
     rgba(255, 255, 255, 0.82)
   );
   box-shadow: var(--shadow);
+}
+
+.dashboard-hint {
+  margin: 0 0 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
 }
 
 /* Visible frame that the scaled Tableau dashboard must fit inside */
