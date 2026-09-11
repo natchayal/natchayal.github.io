@@ -274,6 +274,18 @@ main {
   margin-top: 10px;
 }
 
+.project-slide-label {
+  margin: 18px 0 6px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.papers-group > .project-slide-label:first-of-type {
+  margin-top: 16px;
+}
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -313,7 +325,7 @@ main {
   overflow: hidden;
 }
 
-.gallery-nav {
+.quick-nav {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -329,7 +341,7 @@ main {
   box-shadow: var(--shadow);
 }
 
-.gallery-nav a {
+.quick-nav a {
   padding: 8px 14px;
   border-radius: 999px;
   background: rgba(0, 60, 185, 0.06);
@@ -339,8 +351,8 @@ main {
   white-space: nowrap;
 }
 
-.gallery-nav a:hover,
-.gallery-nav a:focus-visible {
+.quick-nav a:hover,
+.quick-nav a:focus-visible {
   background: rgba(0, 60, 185, 0.14);
   color: var(--accent);
 }
@@ -1362,7 +1374,7 @@ a.skill-tag:focus-visible {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .gallery-nav {
+  .quick-nav {
     position: static;
   }
 
