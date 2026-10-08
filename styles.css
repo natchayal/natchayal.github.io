@@ -398,7 +398,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  z-index: 15;
+  z-index: 999;
 }
 
 .side-toc::before {
@@ -420,6 +420,8 @@ main {
 
 .side-toc-dot {
   flex-shrink: 0;
+  position: relative;
+  z-index: 1;
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -430,10 +432,12 @@ main {
 
 .side-toc-label {
   position: absolute;
-  left: 22px;
+  left: 20px;
   top: 50%;
-  transform: translateY(-50%) translateX(-6px);
-  padding: 4px 10px;
+  z-index: 2;
+  writing-mode: vertical-rl;
+  transform: translateY(-50%) rotate(180deg);
+  padding: 8px 5px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--panel-border);
@@ -444,14 +448,13 @@ main {
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 200ms ease, transform 200ms ease;
+  transition: opacity 200ms ease;
 }
 
 .side-toc-item:hover .side-toc-label,
 .side-toc-item:focus-visible .side-toc-label,
 .side-toc-item.is-active .side-toc-label {
   opacity: 1;
-  transform: translateY(-50%) translateX(0);
 }
 
 .side-toc-item.is-active .side-toc-dot {
