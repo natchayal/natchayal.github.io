@@ -168,6 +168,10 @@
       <div class="formula-block reveal delay-2">annual_mean ~ treated + time_index + post + post_time
   + treated:time_index + treated:post + treated:post_time</div>
 
+      <p class="data-note">
+        A single colon (<code>treated:post</code>) is R's formula <em>interaction</em> operator &mdash; it means "the combined effect of these two variables," not a namespace reference. That's different from a double colon (<code>pkg::function</code>), which calls a function from a specific package. Each <code>treated:&hellip;</code> term below estimates something AM-specific, on top of whatever <code>treated</code>, <code>time_index</code>, <code>post</code>, and <code>post_time</code> already explain on their own.
+      </p>
+
       <div class="checklist-grid reveal delay-2" style="margin-top:18px;">
         <div class="checklist-item"><span><strong>treated:post</strong> &mdash; the AM-specific differential <em>level</em> change at the 2006 boundary, relative to control.</span></div>
         <div class="checklist-item"><span><strong>treated:post_time</strong> &mdash; the AM-specific differential annual <em>slope</em> change after 2006, relative to control.</span></div>
