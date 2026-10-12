@@ -144,6 +144,8 @@ document.getElementById('year').textContent = new Date().getFullYear();
     'experience.html': 'Experience',
     'skills-awards.html': 'Skills & Awards',
     'teaching.html': 'Teaching',
+    'explainers.html': 'Teaching',
+    'intervention-analysis.html': 'Teaching',
     'gallery.html': 'Gallery',
     'contact.html': 'Contact',
   };

@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="An interactive walkthrough of difference-in-differences and controlled interrupted time-series intervention analysis, with R code and a downloadable example dataset." />
+  <title>Intervention Analysis — Jade's Field Notes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=34" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-a" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-b" aria-hidden="true"></div>
+  <canvas class="ripple-canvas" aria-hidden="true"></canvas>
+
+  <header class="topbar">
+    <a class="brand" href="index.html">Natchaya "Jade" Luangphairin</a>
+    <nav class="nav">
+      <a href="index.html">Overview</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="publications.html">Publications</a>
+      <a href="experience.html">Experience</a>
+      <a href="skills-awards.html">Skills &amp; Awards</a>
+      <a href="teaching.html" class="active">Teaching</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+      <div class="search-box">
+        <input type="search" id="site-search" class="search-input" placeholder="Search..." aria-label="Search site" autocomplete="off" />
+        <div class="search-results" id="search-results" hidden></div>
+      </div>
+    </nav>
+  </header>
+
+  <nav class="side-toc is-article" aria-label="Track and jump to section">
+    <span class="side-toc-heading">On This Page</span>
+    <a class="side-toc-item" href="#overview">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Overview &amp; Data</span>
+    </a>
+    <a class="side-toc-item" href="#framework">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Framework Pseudocode</span>
+    </a>
+    <a class="side-toc-item" href="#model">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Model Specification</span>
+    </a>
+    <a class="side-toc-item" href="#r-code">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">R Code Example</span>
+    </a>
+    <a class="side-toc-item" href="#live-r">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Live Data Check</span>
+    </a>
+    <a class="side-toc-item" href="#did-diagram">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">AM Impact Diagram</span>
+    </a>
+    <a class="side-toc-item" href="#diagnostics">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Diagnostics</span>
+    </a>
+    <a class="side-toc-item" href="#interpretation">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Interpretation</span>
+    </a>
+    <a class="side-toc-item" href="#checklist">
+      <span class="side-toc-dot"></span>
+      <span class="side-toc-label">Checklist</span>
+    </a>
+  </nav>
+
+  <main>
+    <section class="section" id="overview">
+      <a class="article-back-link reveal" href="explainers.html">Browse all explainers &rarr;</a>
+      <div class="section-heading reveal">
+        <p class="eyebrow">Teaching &middot; Explainer</p>
+        <h2>Difference-in-differences &amp; intervention analysis.</h2>
+        <p class="article-byline">Published by Natchaya Luangphairin &middot; October 11, 2026</p>
+        <div class="topic-pills">
+          <span class="card-label">Controlled ITS</span>
+          <span class="card-label">Difference-in-Differences</span>
+          <span class="card-label">AM vs. Control &middot; Annual EP</span>
+        </div>
+      </div>
+
+      <p class="section-copy reveal delay-1">
+        This page walks through how to evaluate whether a policy or treatment actually changed an outcome, using a difference-in-differences-style framework applied to a controlled interrupted time series (ITS). The same framework pseudocode applies to most before/after policy evaluations &mdash; swap in your own treated and control series and intervention year.
+      </p>
+
+      <div class="teaching-panel reveal delay-2">
+        <p style="margin:0;">
+          <strong>The real-world question.</strong> In 2001, EPA revised the drinking water arsenic Maximum Contaminant Level (MCL) from 50 &micro;g/L down to 10 &micro;g/L, with compliance required starting in 2006. To meet the new standard, many utilities installed advanced removal technologies &mdash; Adsorptive Media (<strong>AM</strong>) being one of the most widely adopted &mdash; while others stayed on existing treatment, forming a natural <strong>control</strong> group. Every system faced the same regulatory pressure after 2006, so a simple before/after comparison of AM systems alone would conflate "the rule" with "the technology." The question this worked example answers: once the shared regulatory effect is netted out using the control group, did installing AM specifically improve arsenic removal and compliance, beyond what utilities achieved anyway? The dataset below (entry-point annual arsenic concentrations, 1998&ndash;2019) comes from the same EPA arsenic demonstration program behind the <a href="projects.html#project-arsenic">Arsenic Demonstration Sites project</a>.
+        </p>
+      </div>
+
+      <div class="teaching-panel reveal delay-2">
+        <p class="data-note" style="margin-top:0;">Example dataset &middot; annual EP arsenic concentrations, 1998&ndash;2019, AM vs. control</p>
+        <div class="hero-actions" style="margin-top:12px;">
+          <a class="button button-primary" href="documents/Teaching/demo data/arsenic_am_data_wqtc_demo.csv" download="arsenic_am_data_wqtc_demo.csv">Download example CSV</a>
+          <a class="button button-secondary" href="#r-code">Jump to R code →</a>
+        </div>
+        <p class="data-note">Columns: year, technology (AM = Adsorptive Media; control = other/baseline treatment), sampling_point_type, annual_mean, annual_sd, annual_min, annual_max, n_systems, se_mean, ci_lower, ci_upper. EP = Entry Point, finished water as it enters the distribution system.</p>
+      </div>
+    </section>
+
+    <nav class="quick-nav reveal" aria-label="Jump to section">
+      <span class="quick-nav-label">On This Page &rarr;</span>
+      <a href="#overview">Overview &amp; Data</a>
+      <a href="#framework">Framework Pseudocode</a>
+      <a href="#model">Model Specification</a>
+      <a href="#r-code">R Code Example</a>
+      <a href="#live-r">Live Data Check</a>
+      <a href="#did-diagram">AM Impact Diagram</a>
+      <a href="#diagnostics">Diagnostics</a>
+      <a href="#interpretation">Interpretation</a>
+      <a href="#checklist">Checklist</a>
+    </nav>
+
+    <section class="section" id="framework">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Step 1</p>
+        <h2>Framework pseudocode for intervention analysis.</h2>
+      </div>
+
+      <p class="section-copy reveal delay-1">
+        Before writing any code, define the comparison in plain terms. This pseudocode generalizes to any before/after policy or treatment evaluation that has a comparison (control) series available.
+      </p>
+
+      <details class="method-details reveal delay-2" open>
+        <summary>General framework (click to collapse)</summary>
+        <div class="method-body">
+          <ol>
+            <li><strong>Define the groups.</strong> Identify the treated series (the group exposed to the intervention) and a control/reference series that was not exposed but experiences similar background trends.</li>
+            <li><strong>Define the intervention time.</strong> Pick the first period the intervention applies to &mdash; e.g., the first year a regulation took effect. Everything before is "pre"; that period onward is "post."</li>
+            <li><strong>Build the time variables.</strong>
+              <ul>
+                <li><code>time_index</code> = elapsed time since the start of the series (captures the shared baseline trend).</li>
+                <li><code>post</code> = 1 from the intervention period onward, else 0 (captures a shared level shift).</li>
+                <li><code>post_time</code> = time elapsed since the intervention (0 before it) (captures a shared slope change).</li>
+                <li><code>treated</code> = 1 for the treated group, 0 for control.</li>
+              </ul>
+            </li>
+            <li><strong>Interact treated with each time term.</strong> <code>treated:time_index</code>, <code>treated:post</code>, and <code>treated:post_time</code> isolate what is different about the treated group specifically, net of whatever the control group also experienced.</li>
+            <li><strong>Fit the model</strong> and pull out the two estimands that matter most: the treated-specific level change at the boundary (<code>treated:post</code>) and the treated-specific slope change afterward (<code>treated:post_time</code>).</li>
+            <li><strong>Check assumptions before trusting the estimate:</strong> pre-trend similarity (<code>treated:time_index</code> in the pre-period only), residual autocorrelation, and a placebo test with a fake boundary inside the pre-period.</li>
+            <li><strong>Report with uncertainty.</strong> Pair every estimate with a confidence interval, and describe it as an association/controlled-ITS estimate unless the design genuinely supports a causal claim.</li>
+          </ol>
+        </div>
+      </details>
+    </section>
+
+    <section class="section" id="model">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Step 2</p>
+        <h2>The controlled segmented regression.</h2>
+      </div>
+
+      <p class="section-copy reveal delay-1">
+        The control series carries its own baseline, trend, and common post-boundary shift. The <code>treated</code> interactions estimate how much the AM series departs from that shared pattern.
+      </p>
+
+      <div class="formula-block reveal delay-2">annual_mean ~ treated + time_index + post + post_time
+  + treated:time_index + treated:post + treated:post_time</div>
+
+      <div class="checklist-grid reveal delay-2" style="margin-top:18px;">
+        <div class="checklist-item"><span><strong>treated:post</strong> &mdash; the AM-specific differential <em>level</em> change at the 2006 boundary, relative to control.</span></div>
+        <div class="checklist-item"><span><strong>treated:post_time</strong> &mdash; the AM-specific differential annual <em>slope</em> change after 2006, relative to control.</span></div>
+        <div class="checklist-item"><span><strong>treated:time_index</strong> &mdash; a pre-period trend check. A large or statistically meaningful value weakens a parallel-trends interpretation.</span></div>
+        <div class="checklist-item"><span><strong>post</strong> alone &mdash; the common post-period shift shared by the control group. This is <em>not</em> the AM effect on its own.</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="r-code">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Step 3</p>
+        <h2>Worked example in R.</h2>
+      </div>
+
+      <p class="section-copy reveal delay-1">
+        This reads the downloadable CSV above directly, fits the controlled segmented model, runs pre-trend and placebo diagnostics, and prints a plain-language interpretation template filled in with the fitted numbers. Base R is enough to run it; <code>ggplot2</code>, <code>sandwich</code>, and <code>lmtest</code> are used when available for a nicer plot and robust standard errors.
+      </p>
+
+      <div class="code-block reveal delay-2">
+        <div class="code-block-bar">
+          <p class="code-block-label">R &middot; controlled-its-arsenic.R</p>
+          <button type="button" class="copy-code-btn" data-copy-target="r-code-block">Copy code</button>
+        </div>
+        <pre><code id="r-code-block"># Controlled interrupted time-series analysis: AM vs. control, annual EP data
+# Put arsenic_am_data_wqtc_demo.csv in the working directory (downloaded above).
+
+# pacman package and p_load command makes it easy to install and load commands
+if (!require(pacman)) install.packages("pacman")
+p_load(dplyr, ggplot2, sandwich, lmtest)
+
+dat &lt;- read.csv("arsenic_am_data_wqtc_demo.csv", stringsAsFactors = FALSE)
+names(dat)[1] &lt;- "year"  # guards against a UTF-8 BOM corrupting the first column name
+
+# --- Validate before analysis ---
+expected_years &lt;- 1998:2019
+stopifnot(setequal(unique(dat$technology), c("AM", "control")))
+stopifnot(!anyDuplicated(dat[c("year", "technology")]))
+stopifnot(all(vapply(split(dat$year, dat$technology),
+  function(x) identical(sort(x), expected_years), logical(1))))
+
+# --- Build the intervention variables (2006 = first post-intervention year) ---
+dat &lt;- dat |&gt;
+  mutate(
+    technology = factor(technology, levels = c("control", "AM")),
+    treated    = as.integer(technology == "AM"),
+    time_index = year - 1998,
+    post       = as.integer(year &gt;= 2006),
+    post_time  = pmax(year - 2006, 0),
+    pre_period = year &lt; 2006
+  )
+
+# --- Descriptive pre/post means (not causal, just context) ---
+dat |&gt;
+  group_by(technology, post) |&gt;
+  summarise(annual_mean = mean(annual_mean), .groups = "drop") |&gt;
+  mutate(period = ifelse(post == 0, "1998-2005 (pre)", "2006-2019 (post)")) |&gt;
+  select(technology, period, annual_mean) |&gt;
+  print()
+
+# --- Plot the two series with the intervention boundary marked ---
+ggplot(dat, aes(year, annual_mean, colour = technology)) +
+  geom_line(linewidth = 0.9) +
+  geom_point(size = 2) +
+  geom_vline(xintercept = 2006, linetype = "dashed", colour = "#b45309") +
+  labs(title = "Annual EP mean: AM vs. control",
+       subtitle = "Dashed line = 2006, first post-intervention year",
+       x = "Year", y = "annual_mean", colour = "Technology") +
+  theme_minimal(base_size = 12)
+
+# --- Primary controlled segmented regression ---
+model &lt;- lm(
+  annual_mean ~ treated + time_index + post + post_time +
+    treated:time_index + treated:post + treated:post_time,
+  data = dat
+)
+summary(model)
+cbind(estimate = coef(model), confint(model))
+
+# --- Newey-West robust inference (lag = 2 as an annual-data starting point;
+#     sensitivity-test other lags, there are few years per series) ---
+nw_vcov &lt;- NeweyWest(model, lag = 2, prewhite = FALSE)
+coeftest(model, vcov. = nw_vcov)
+
+nw_se &lt;- sqrt(diag(nw_vcov))
+nw_ci &lt;- data.frame(
+  term     = names(coef(model)),
+  estimate = coef(model),
+  lower    = coef(model) - 1.96 * nw_se,
+  upper    = coef(model) + 1.96 * nw_se,
+  row.names = NULL
+)
+
+key &lt;- filter(nw_ci, term %in% c("treated:post", "treated:post_time"))
+print(key)
+
+# --- AM-specific effect over time relative to the no-intervention counterfactual ---
+data.frame(year = 2006:2019) |&gt;
+  mutate(am_specific_effect = coef(model)["treated:post"] +
+           coef(model)["treated:post_time"] * (year - 2006)) |&gt;
+  print()
+
+# --- Pre-trend check (parallel trends) ---
+pre_model &lt;- lm(annual_mean ~ treated + time_index + treated:time_index,
+                 data = filter(dat, pre_period))
+coef(summary(pre_model))["treated:time_index", , drop = FALSE]
+
+# --- Placebo test: move the boundary to 2004, using only real pre-period years ---
+placebo &lt;- dat |&gt;
+  filter(pre_period) |&gt;
+  mutate(
+    placebo_post      = as.integer(year &gt;= 2004),
+    placebo_post_time = pmax(year - 2004, 0)
+  )
+placebo_model &lt;- lm(
+  annual_mean ~ treated + time_index + placebo_post + placebo_post_time +
+    treated:time_index + treated:placebo_post + treated:placebo_post_time,
+  data = placebo
+)
+coef(summary(placebo_model))[c("treated:placebo_post", "treated:placebo_post_time"), , drop = FALSE]
+
+# --- Residuals over time (watch for patterns a 2006-only story wouldn't predict) ---
+plot(dat$year, residuals(model), pch = 16, xlab = "Year", ylab = "Residual",
+     main = "Residuals from controlled segmented model")
+abline(h = 0, lty = 2)
+
+# --- Plain-language summary, filled in from the fitted model at runtime ---
+fmt   &lt;- function(x) formatC(x, digits = 2, format = "f")
+level &lt;- filter(key, term == "treated:post")
+slope &lt;- filter(key, term == "treated:post_time")
+cat(sprintf(
+  "At the 2006 boundary, the estimated AM-specific differential level change was %s units (95%% CI %s, %s). The estimated additional annual slope change after 2006 was %s units/year (95%% CI %s, %s).\n",
+  fmt(level$estimate), fmt(level$lower), fmt(level$upper),
+  fmt(slope$estimate), fmt(slope$lower), fmt(slope$upper)
+))
+
+# --- Optional sensitivity analysis: inverse-variance weighting ---
+# annual_mean is already an aggregated value. The primary model above does NOT
+# weight by annual_sd / n_systems / se_mean. As a sensitivity check only:
+#
+# weighted_model &lt;- lm(
+#   annual_mean ~ treated + time_index + post + post_time +
+#     treated:time_index + treated:post + treated:post_time,
+#   data = dat, weights = 1 / dat$se_mean^2
+# )
+# summary(weighted_model)
+#
+# Compare coefficients and uncertainty against the unweighted primary model
+# rather than reporting the weighted version alone.</code></pre>
+      </div>
+    </section>
+
+    <section class="section" id="live-r">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Interactive</p>
+        <h2>Computed live from the data.</h2>
+      </div>
+
+      <p class="section-copy reveal delay-1">
+        Nothing below is typed in &mdash; it's fetched from the same CSV you can download above and computed on the spot in JavaScript, right as the page loads: the before/after group means, and a full OLS regression with Newey-West (lag-2) robust standard errors, fit live in your browser with no R required.
+      </p>
+
+      <div class="did-diagram reveal delay-2">
+        <table class="did-table" id="live-js-table">
+          <caption>COMPUTING FROM ARSENIC_AM_DATA_WQTC_DEMO.CSV&hellip;</caption>
+          <thead>
+            <tr>
+              <th scope="col" style="text-align:left;">Group</th>
+              <th scope="col">Before (1998&ndash;2005)</th>
+              <th scope="col">After (2006&ndash;2019)</th>
+              <th scope="col">Difference</th>
+            </tr>
+          </thead>
+          <tbody id="live-js-tbody">
+            <tr><td colspan="4" style="text-align:center;">&hellip;</td></tr>
+          </tbody>
+        </table>
+        <p class="data-note" id="live-js-note">Loading CSV&hellip;</p>
+
+        <table class="did-table did-stats-table" id="live-reg-table">
+          <caption>FULL REGRESSION &middot; OLS WITH NEWEY-WEST (LAG 2) ROBUST SEs</caption>
+          <thead>
+            <tr>
+              <th scope="col" style="text-align:left;">Term</th>
+              <th scope="col">Estimate</th>
+              <th scope="col">Robust SE</th>
+              <th scope="col">z</th>
+              <th scope="col">p-value</th>
+            </tr>
+          </thead>
+          <tbody id="live-reg-tbody">
+            <tr><td colspan="5" style="text-align:center;">&hellip;</td></tr>
+          </tbody>
+        </table>
+        <p class="data-note" id="live-reg-note">Fitting model&hellip;</p>
+      </div>
+    </section>
+
+    <section class="section" id="did-diagram">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Visualizing it</p>
+        <h2>The AM impact, before and after.</h2>
+      </div>
+
+      <p class="section-copy reveal delay-1">
+        A simplified two-period version of the same idea &mdash; no trend terms, just the pre/post means for each group &mdash; makes the logic easy to see at a glance. The dashed line is the counterfactual: where AM "would have" landed if it had simply followed the control group's own change. The gap between that line and AM's actual post-period point is the AM-specific impact.
+      </p>
+
+      <div class="did-diagram reveal delay-2">
+        <table class="did-table">
+          <caption>ARSENIC (&micro;g/L) &middot; PRE/POST MEANS, 1998&ndash;2019</caption>
+          <thead>
+            <tr>
+              <th scope="col" style="text-align:left;">Group</th>
+              <th scope="col">Before (1998&ndash;2005)</th>
+              <th scope="col">After (2006&ndash;2019)</th>
+              <th scope="col">Difference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Treatment (AM)</th>
+              <td>28.5 <span class="did-sd">&plusmn;4.9</span></td>
+              <td>8.3 <span class="did-sd">&plusmn;2.3</span></td>
+              <td>&minus;20.2</td>
+            </tr>
+            <tr>
+              <th scope="row">Control (no AM)</th>
+              <td>23.7 <span class="did-sd">&plusmn;1.3</span></td>
+              <td>19.7 <span class="did-sd">&plusmn;2.0</span></td>
+              <td>&minus;4.1 <span class="did-beta">(&beta;&#8322;)</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Difference</th>
+              <td>4.8 <span class="did-beta">(&beta;&#8321;)</span></td>
+              <td>&minus;11.3</td>
+              <td class="did-highlight">&minus;16.1 <span class="did-beta">(&beta;&#8323;)</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="did-svg-wrap">
+          <svg viewBox="0 0 820 370" role="img" aria-label="Line chart showing arsenic concentration before and after the 2006 AM intervention for the treatment group and the control group, with a dashed counterfactual line and the AM impact gap marked on the right.">
+            <!-- gridlines -->
+            <g stroke="rgba(1,32,96,0.12)" stroke-width="1">
+              <line x1="70" y1="320.0" x2="660" y2="320.0" />
+              <line x1="70" y1="271.7" x2="660" y2="271.7" />
+              <line x1="70" y1="223.3" x2="660" y2="223.3" />
+              <line x1="70" y1="175.0" x2="660" y2="175.0" />
+              <line x1="70" y1="126.7" x2="660" y2="126.7" />
+              <line x1="70" y1="78.3" x2="660" y2="78.3" />
+              <line x1="70" y1="30.0" x2="660" y2="30.0" />
+            </g>
+            <g fill="var(--text)" opacity="0.65" font-family="'DM Sans','Manrope',sans-serif" font-size="11" text-anchor="end">
+              <text x="60" y="323.5">0</text>
+              <text x="60" y="275.2">5</text>
+              <text x="60" y="226.8">10</text>
+              <text x="60" y="178.5">15</text>
+              <text x="60" y="130.2">20</text>
+              <text x="60" y="81.8">25</text>
+              <text x="60" y="33.5">30</text>
+            </g>
+            <text x="28" y="175" transform="rotate(-90 28 175)" text-anchor="middle" fill="var(--text)" opacity="0.75" font-family="'Space Grotesk',sans-serif" font-size="12" font-weight="700">Arsenic (&micro;g/L)</text>
+
+            <!-- axes -->
+            <line x1="70" y1="30" x2="70" y2="320" stroke="var(--panel-border)" stroke-width="1.5" />
+            <line x1="70" y1="320" x2="660" y2="320" stroke="var(--panel-border)" stroke-width="1.5" />
+
+            <!-- x labels -->
+            <text x="220" y="345" text-anchor="middle" fill="var(--text)" font-family="'Space Grotesk',sans-serif" font-size="12" font-weight="700">Pre-Intervention</text>
+            <text x="560" y="345" text-anchor="middle" fill="var(--text)" font-family="'Space Grotesk',sans-serif" font-size="12" font-weight="700">Post-Intervention</text>
+            <text x="365" y="364" text-anchor="middle" fill="var(--text)" opacity="0.75" font-family="'DM Sans','Manrope',sans-serif" font-size="11">AM intervention boundary: 2006</text>
+
+            <!-- counterfactual dashed line -->
+            <line x1="220" y1="44.3" x2="560" y2="83.6" stroke="var(--accent-gold)" stroke-width="2.5" stroke-dasharray="7 6" />
+            <circle cx="560" cy="83.6" r="7" fill="#ffffff" stroke="var(--accent-gold)" stroke-width="2.5" />
+            <text x="572" y="80" fill="var(--accent-gold)" font-family="'DM Sans','Manrope',sans-serif" font-size="10.5" font-style="italic">Counterfactual</text>
+            <text x="572" y="93" fill="var(--accent-gold)" font-family="'DM Sans','Manrope',sans-serif" font-size="10.5" font-style="italic">(business as usual)</text>
+
+            <!-- control line -->
+            <line x1="220" y1="90.6" x2="560" y2="129.9" stroke="#2a78d6" stroke-width="3" />
+            <circle cx="220" cy="90.6" r="17" fill="#2a78d6" />
+            <text x="220" y="94.5" text-anchor="middle" fill="#ffffff" font-family="'Space Grotesk',sans-serif" font-size="11" font-weight="700">23.7</text>
+            <circle cx="560" cy="129.9" r="17" fill="#2a78d6" />
+            <text x="560" y="133.5" text-anchor="middle" fill="#ffffff" font-family="'Space Grotesk',sans-serif" font-size="11" font-weight="700">19.7</text>
+            <text x="195" y="95" text-anchor="end" fill="#2a78d6" font-family="'DM Sans','Manrope',sans-serif" font-size="10.5">&beta;&#8320;</text>
+            <text x="585" y="134" fill="#2a78d6" font-family="'DM Sans','Manrope',sans-serif" font-size="10.5">&beta;&#8320;+&beta;&#8322;</text>
+
+            <!-- AM / treatment line -->
+            <line x1="220" y1="44.3" x2="560" y2="239.3" stroke="#1baf7a" stroke-width="3" />
+            <circle cx="220" cy="44.3" r="17" fill="#1baf7a" />
+            <text x="220" y="47.8" text-anchor="middle" fill="#ffffff" font-family="'Space Grotesk',sans-serif" font-size="11" font-weight="700">28.5</text>
+            <circle cx="560" cy="239.3" r="17" fill="#1baf7a" />
+            <text x="560" y="242.8" text-anchor="middle" fill="#ffffff" font-family="'Space Grotesk',sans-serif" font-size="11" font-weight="700">8.3</text>
+            <text x="195" y="40" text-anchor="end" fill="#1baf7a" font-family="'DM Sans','Manrope',sans-serif" font-size="10.5">&beta;&#8320;+&beta;&#8321;</text>
+            <text x="585" y="248" fill="#1baf7a" font-family="'DM Sans','Manrope',sans-serif" font-size="9.5">&beta;&#8320;+&beta;&#8321;+&beta;&#8322;+&beta;&#8323;</text>
+
+            <!-- AM impact bracket -->
+            <g stroke="var(--accent-strong)" stroke-width="2" fill="none">
+              <line x1="610" y1="83.6" x2="610" y2="239.3" />
+              <line x1="604" y1="83.6" x2="616" y2="83.6" />
+              <line x1="604" y1="239.3" x2="616" y2="239.3" />
+            </g>
+            <text x="624" y="156" fill="var(--accent-strong)" font-family="'Space Grotesk',sans-serif" font-size="12" font-weight="700">AM Impact</text>
+            <text x="624" y="172" fill="var(--accent-strong)" font-family="'DM Sans','Manrope',sans-serif" font-size="11">&minus;16.1 &micro;g/L</text>
+            <text x="624" y="187" fill="var(--accent-strong)" opacity="0.7" font-family="'DM Sans','Manrope',sans-serif" font-size="9.5">(&beta;&#8323;, simple DiD)</text>
+          </svg>
+        </div>
+
+        <div class="did-legend reveal delay-2">
+          <span class="did-legend-item"><span class="did-legend-swatch" style="background:#1baf7a;"></span>Treatment (AM)</span>
+          <span class="did-legend-item"><span class="did-legend-swatch" style="background:#2a78d6;"></span>Control (no AM)</span>
+          <span class="did-legend-item"><span class="did-legend-swatch" style="background:var(--accent-gold);"></span>Counterfactual trendline</span>
+        </div>
+
+        <p class="data-note">
+          &plusmn; is the standard deviation <em>across years</em> within each period (8 pre-years, 14 post-years) &mdash; a descriptive spread, not a standard error. &beta;&#8320; = control baseline &middot; &beta;&#8321; = AM vs. control gap already present pre-intervention &middot; &beta;&#8322; = common post-period shift (control) &middot; &beta;&#8323; = AM-specific impact (the simple-DiD counterpart to <code>treated:post</code> in the full model above). Numbers are real, unweighted group means from the dataset &mdash; see the live regression table above for the full estimate with a Newey-West standard error and p-value.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="diagnostics">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Step 4</p>
+        <h2>Check pre-trends, residuals, and placebo timing.</h2>
+      </div>
+
+      <p class="section-copy reveal delay-1">
+        Diagnostics matter even more with short annual series like this one (22 years per group) &mdash; a single influential year can make or break an estimate.
+      </p>
+
+      <details class="method-details reveal delay-2">
+        <summary>Pre-trend check</summary>
+        <div class="method-body">
+          <p>Fit the segmented model on pre-period data only (1998&ndash;2005) and inspect <code>treated:time_index</code>. If AM and control were already diverging before 2006, the "parallel trends" assumption behind the controlled comparison is weaker, and any post-2006 estimate is harder to attribute to the intervention alone.</p>
+        </div>
+      </details>
+
+      <details class="method-details reveal delay-2">
+        <summary>Residuals &amp; autocorrelation</summary>
+        <div class="method-body">
+          <p>Plot residuals against year and check the ACF. Annual environmental data is often autocorrelated, which understates conventional standard errors. Newey-West (lag 2, sensitivity-tested) gives more honest uncertainty, but it doesn't fix a flawed comparison &mdash; it only adjusts the error bars around it.</p>
+        </div>
+      </details>
+
+      <details class="method-details reveal delay-2">
+        <summary>Placebo test</summary>
+        <div class="method-body">
+          <p>Re-run the same model with a fake intervention boundary (here, 2004) using only real pre-intervention years. A placebo interaction that looks about as large as the real one is a warning sign that something other than the actual 2006 intervention is driving the result.</p>
+        </div>
+      </details>
+    </section>
+
+    <section class="section" id="interpretation">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Step 5</p>
+        <h2>Reading the result.</h2>
+      </div>
+
+      <p class="section-copy reveal delay-1">
+        For any year <em>y</em> at or after 2006, the model-implied AM-specific effect relative to the no-intervention counterfactual is approximately:
+      </p>
+      <div class="formula-block reveal delay-2">treated:post + treated:post_time &times; (y &minus; 2006)</div>
+      <p class="section-copy reveal delay-2" style="margin-top:14px;">
+        Report it as: <em>"At the 2006 boundary, the estimated AM-specific differential level change was [estimate] units (95% CI [lower], [upper]). The estimated additional annual slope change after 2006 was [estimate] units per year (95% CI [lower], [upper])."</em> Treat this as a controlled-ITS association rather than a definitive causal effect unless the intervention timing, control validity, and pre-trends genuinely support that stronger claim.
+      </p>
+    </section>
+
+    <section class="section" id="checklist">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Step 6</p>
+        <h2>Before you conclude.</h2>
+      </div>
+
+      <p class="section-copy reveal delay-1">
+        A controlled ITS coefficient is only as credible as its timing, comparison series, data quality, and design assumptions.
+      </p>
+
+      <div class="checklist-grid reveal delay-2">
+        <div class="checklist-item"><span><strong>Intervention definition</strong> &mdash; is 2006 defensibly the first post-intervention year?</span></div>
+        <div class="checklist-item"><span><strong>Control validity</strong> &mdash; is the control series unaffected by the intervention, yet exposed to similar background forces?</span></div>
+        <div class="checklist-item"><span><strong>Pre-trends</strong> &mdash; does the pre-period-only check support a plausible parallel-trends comparison?</span></div>
+        <div class="checklist-item"><span><strong>Level change</strong> &mdash; is <code>treated:post</code> reported with a confidence interval and clear units?</span></div>
+        <div class="checklist-item"><span><strong>Slope change</strong> &mdash; is <code>treated:post_time</code> reported and interpreted over time, not just at one point?</span></div>
+        <div class="checklist-item"><span><strong>Uncertainty</strong> &mdash; were conventional and Newey-West results, residuals, and lag sensitivity considered?</span></div>
+        <div class="checklist-item"><span><strong>Aggregation &amp; weighting</strong> &mdash; is <code>annual_mean</code> treated as aggregated, with any <code>se_mean</code> weighting clearly labeled as a sensitivity check?</span></div>
+        <div class="checklist-item"><span><strong>Placebo result</strong> &mdash; does the fake 2004 boundary avoid producing an effect as large as the real one?</span></div>
+        <div class="checklist-item" style="grid-column:1/-1;"><span><strong>Limitations</strong> &mdash; have concurrent events, control limitations, timing uncertainty, few annual observations, and the association-vs-causation distinction been stated plainly?</span></div>
+      </div>
+
+      <a class="article-back-link reveal delay-2" href="explainers.html" style="margin-top:20px;">Browse all explainers &rarr;</a>
+    </section>
+
+    <section class="section" id="quick-access">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Quick Access</p>
+        <h2>Quick access to the main sections.</h2>
+      </div>
+
+      <div class="links-grid">
+        <a class="link-pill reveal delay-1" href="index.html">Overview</a>
+        <a class="link-pill reveal delay-1" href="about.html">About</a>
+        <a class="link-pill reveal delay-1" href="projects.html">Projects</a>
+        <a class="link-pill reveal delay-2" href="publications.html">Publications</a>
+        <a class="link-pill reveal delay-2" href="experience.html">Experience</a>
+        <a class="link-pill reveal delay-2" href="skills-awards.html">Skills &amp; Awards</a>
+        <a class="link-pill reveal delay-3" href="teaching.html">Teaching</a>
+        <a class="link-pill reveal delay-3" href="gallery.html">Gallery</a>
+        <a class="link-pill reveal delay-3" href="contact.html">Contact</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Natchaya Luangphairin.</p>
+    <p class="footer-updated">Last updated: <span id="last-updated"></span></p>
+  </footer>
+
+  <script src="script.js?v=18"></script>
+  <script>
+    (() => {
+      const tbody = document.getElementById('live-js-tbody');
+      const caption = document.querySelector('#live-js-table caption');
+      const note = document.getElementById('live-js-note');
+      const regTbody = document.getElementById('live-reg-tbody');
+      const regNote = document.getElementById('live-reg-note');
+      if (!tbody) return;
+
+      const CSV_PATH = 'documents/Teaching/demo data/arsenic_am_data_wqtc_demo.csv';
+      const TERM_NAMES = ['(Intercept)', 'treated', 'time_index', 'post', 'post_time',
+        'treated:time_index', 'treated:post', 'treated:post_time'];
+
+      function parseCSV(text) {
+        text = text.replace(/^﻿/, '');
+        const lines = text.trim().split('\n');
+        const headers = lines[0].split(',').map((h) => h.trim());
+        return lines.slice(1).map((line) => {
+          const cells = line.split(',');
+          const row = {};
+          headers.forEach((h, i) => { row[h] = cells[i]; });
+          return row;
+        });
+      }
+
+      function mean(xs) {
+        return xs.reduce((a, b) => a + b, 0) / xs.length;
+      }
+
+      function sd(xs) {
+        const m = mean(xs);
+        const ss = xs.reduce((s, x) => s + (x - m) * (x - m), 0);
+        return Math.sqrt(ss / (xs.length - 1));
+      }
+
+      function fmt(n) {
+        return (n >= 0 ? '' : '−') + Math.abs(n).toFixed(1);
+      }
+
+      function fmt3(n) {
+        return (n >= 0 ? '' : '−') + Math.abs(n).toFixed(3);
+      }
+
+      function fmtP(p) {
+        const text = p < 0.0001 ? '< 0.0001' : p.toFixed(4);
+        const stars = p < 0.001 ? '***' : p < 0.01 ? '**' : p < 0.05 ? '*' : '';
+        return stars ? `${text} ${stars}` : `${text} (ns)`;
+      }
+
+      // --- small linear-algebra helpers (plain JS, no library) ---
+      function transpose(M) {
+        return M[0].map((_, j) => M.map((row) => row[j]));
+      }
+      function matMul(A, B) {
+        const r = A.length, kk = B.length, c = B[0].length;
+        const out = Array.from({ length: r }, () => new Array(c).fill(0));
+        for (let i = 0; i < r; i++) {
+          for (let k2 = 0; k2 < kk; k2++) {
+            const a = A[i][k2];
+            if (a === 0) continue;
+            for (let j = 0; j < c; j++) out[i][j] += a * B[k2][j];
+          }
+        }
+        return out;
+      }
+      function matVecMul(A, v) {
+        return A.map((row) => row.reduce((s, a, j) => s + a * v[j], 0));
+      }
+      function invert(M) {
+        const n = M.length;
+        const A = M.map((row, i) => [...row, ...Array.from({ length: n }, (_, j) => (i === j ? 1 : 0))]);
+        for (let col = 0; col < n; col++) {
+          let pivotRow = col;
+          let maxVal = Math.abs(A[col][col]);
+          for (let r = col + 1; r < n; r++) {
+            if (Math.abs(A[r][col]) > maxVal) { maxVal = Math.abs(A[r][col]); pivotRow = r; }
+          }
+          if (pivotRow !== col) { const tmp = A[col]; A[col] = A[pivotRow]; A[pivotRow] = tmp; }
+          const pivot = A[col][col];
+          if (Math.abs(pivot) < 1e-10) throw new Error('design matrix is singular');
+          for (let j = 0; j < 2 * n; j++) A[col][j] /= pivot;
+          for (let r = 0; r < n; r++) {
+            if (r === col) continue;
+            const factor = A[r][col];
+            if (factor === 0) continue;
+            for (let j = 0; j < 2 * n; j++) A[r][j] -= factor * A[col][j];
+          }
+        }
+        return A.map((row) => row.slice(n));
+      }
+
+      // Abramowitz & Stegun 7.1.26 approximation of erf (max error ~1.5e-7)
+      function erf(x) {
+        const sign = x < 0 ? -1 : 1;
+        x = Math.abs(x);
+        const a1 = 0.254829592, a2 = -0.284496736, a3 = 1.421413741,
+          a4 = -1.453152027, a5 = 1.061405429, p = 0.3275911;
+        const t = 1 / (1 + p * x);
+        const y = 1 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+        return sign * y;
+      }
+      function twoSidedP(z) {
+        return 2 * (1 - 0.5 * (1 + erf(Math.abs(z) / Math.SQRT2)));
+      }
+
+      function buildDesign(rows) {
+        const X = [];
+        const y = [];
+        for (const r of rows) {
+          const year = +r.year;
+          const treated = r.technology === 'AM' ? 1 : 0;
+          const time_index = year - 1998;
+          const post = year >= 2006 ? 1 : 0;
+          const post_time = Math.max(year - 2006, 0);
+          X.push([1, treated, time_index, post, post_time,
+            treated * time_index, treated * post, treated * post_time]);
+          y.push(+r.annual_mean);
+        }
+        return { X, y };
+      }
+
+      // Newey-West (lag 2) HAC sandwich covariance, matching the
+      // sandwich::NeweyWest(model, lag = 2, prewhite = FALSE) call in the R script above.
+      function neweyWestVcov(X, resid, XtXinv, lag) {
+        const n = X.length, k = X[0].length;
+        const Xu = X.map((row, i) => row.map((v) => v * resid[i]));
+        const S = Array.from({ length: k }, () => new Array(k).fill(0));
+        function addOuter(a, b, weight) {
+          for (let p = 0; p < k; p++) for (let q = 0; q < k; q++) S[p][q] += weight * a[p] * b[q];
+        }
+        for (let i = 0; i < n; i++) addOuter(Xu[i], Xu[i], 1);
+        for (let l = 1; l <= lag; l++) {
+          const w = 1 - l / (lag + 1);
+          for (let t = l; t < n; t++) {
+            addOuter(Xu[t], Xu[t - l], w);
+            addOuter(Xu[t - l], Xu[t], w);
+          }
+        }
+        return matMul(matMul(XtXinv, S), XtXinv);
+      }
+
+      function fitModel(rows) {
+        const { X, y } = buildDesign(rows);
+        const Xt = transpose(X);
+        const XtX = matMul(Xt, X);
+        const XtXinv = invert(XtX);
+        const beta = matVecMul(XtXinv, matVecMul(Xt, y));
+        const fitted = X.map((row) => row.reduce((s, xi, j) => s + xi * beta[j], 0));
+        const resid = y.map((yi, i) => yi - fitted[i]);
+        const vcov = neweyWestVcov(X, resid, XtXinv, 2);
+        return { beta, vcov };
+      }
+
+      async function run() {
+        try {
+          const res = await fetch(CSV_PATH);
+          if (!res.ok) throw new Error('CSV request failed: ' + res.status);
+          const rows = parseCSV(await res.text());
+
+          const groups = {};
+          for (const tech of ['AM', 'control']) {
+            const pre = rows.filter((r) => r.technology === tech && +r.year < 2006).map((r) => +r.annual_mean);
+            const post = rows.filter((r) => r.technology === tech && +r.year >= 2006).map((r) => +r.annual_mean);
+            const preMean = mean(pre);
+            const postMean = mean(post);
+            groups[tech] = { preMean, postMean, change: postMean - preMean, preSd: sd(pre), postSd: sd(post) };
+          }
+          const did = groups.AM.change - groups.control.change;
+
+          tbody.innerHTML = `
+            <tr>
+              <th scope="row">Treatment (AM)</th>
+              <td>${fmt(groups.AM.preMean)} <span class="did-sd">±${fmt(groups.AM.preSd)}</span></td>
+              <td>${fmt(groups.AM.postMean)} <span class="did-sd">±${fmt(groups.AM.postSd)}</span></td>
+              <td>${fmt(groups.AM.change)}</td>
+            </tr>
+            <tr>
+              <th scope="row">Control (no AM)</th>
+              <td>${fmt(groups.control.preMean)} <span class="did-sd">±${fmt(groups.control.preSd)}</span></td>
+              <td>${fmt(groups.control.postMean)} <span class="did-sd">±${fmt(groups.control.postSd)}</span></td>
+              <td>${fmt(groups.control.change)} <span class="did-beta">(&beta;&#8322;)</span></td>
+            </tr>
+            <tr>
+              <th scope="row">Difference</th>
+              <td>${fmt(groups.AM.preMean - groups.control.preMean)} <span class="did-beta">(&beta;&#8321;)</span></td>
+              <td>${fmt(groups.AM.postMean - groups.control.postMean)}</td>
+              <td class="did-highlight">${fmt(did)} <span class="did-beta">(&beta;&#8323;)</span></td>
+            </tr>
+          `;
+          caption.textContent = 'ARSENIC (µg/L) · LIVE-COMPUTED FROM ARSENIC_AM_DATA_WQTC_DEMO.CSV';
+          note.textContent = '± is the standard deviation across years within each period. Computed just now, directly in your browser, from the real CSV — nothing here is hardcoded.';
+
+          if (regTbody) {
+            const { beta, vcov } = fitModel(rows);
+            const rowsOut = ['treated:post', 'treated:post_time'].map((term) => {
+              const idx = TERM_NAMES.indexOf(term);
+              const est = beta[idx];
+              const se = Math.sqrt(vcov[idx][idx]);
+              const z = est / se;
+              const p = twoSidedP(z);
+              return `
+                <tr>
+                  <th scope="row"><code>${term}</code></th>
+                  <td>${fmt3(est)}</td>
+                  <td>${fmt3(se)}</td>
+                  <td>${fmt3(z)}</td>
+                  <td class="${p < 0.05 ? 'sig' : ''}">${fmtP(p)}</td>
+                </tr>`;
+            }).join('');
+            regTbody.innerHTML = rowsOut;
+            regNote.innerHTML = 'treated:post = AM-specific level change at the 2006 boundary. treated:post_time = AM-specific annual slope change after 2006. Fit live via OLS on the full 44-row dataset, with Newey-West (lag 2) robust standard errors — the same model and SE choice as the downloadable R script above.' +
+              '<br>Two-sided z-test on the Newey-West-adjusted coefficient. * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001, ns = not significant.';
+          }
+        } catch (err) {
+          tbody.innerHTML = '<tr><td colspan="4">Could not load the data.</td></tr>';
+          note.textContent = 'Error: ' + (err && err.message ? err.message : String(err));
+          if (regTbody) {
+            regTbody.innerHTML = '<tr><td colspan="5">Could not fit the model.</td></tr>';
+            regNote.textContent = '';
+          }
+          console.error(err);
+        }
+      }
+
+      run();
+
+      document.querySelectorAll('.copy-code-btn').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const target = document.getElementById(btn.dataset.copyTarget);
+          if (!target) return;
+          const text = target.textContent;
+          try {
+            await navigator.clipboard.writeText(text);
+          } catch (err) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          const original = btn.textContent;
+          btn.textContent = 'Copied!';
+          btn.classList.add('is-copied');
+          setTimeout(() => {
+            btn.textContent = original;
+            btn.classList.remove('is-copied');
+          }, 1800);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
