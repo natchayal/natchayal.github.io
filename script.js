@@ -146,6 +146,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
     'teaching.html': 'Teaching',
     'explainers.html': 'Teaching',
     'intervention-analysis.html': 'Teaching',
+    'claude-code-dev-container.html': 'Teaching',
     'gallery.html': 'Gallery',
     'contact.html': 'Contact',
   };
